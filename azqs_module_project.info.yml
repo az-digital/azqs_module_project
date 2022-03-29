@@ -1,4 +1,4 @@
- name: 'Quickstart module project template'
+name: 'Quickstart module project template'
 type: module
 description: 'Composer project template for custom Quickstart module.'
 core_version_requirement: ^9

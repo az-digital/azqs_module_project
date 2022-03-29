@@ -1,0 +1,61 @@
+name: azqs-module-project
+recipe: drupal9
+config:
+  php: '7.4'
+  via: apache:2.4
+  webroot: web
+  database: mariadb:10.4
+  xdebug: false
+services:
+  # Replaces default lando MariaDB image with arm64 (Apple M1) compatible one.
+  # TODO: remove database service overrides once lando is updated.
+  database:
+    type: compose
+    services:
+      image: mariadb:10.4
+      command: docker-entrypoint.sh mariadbd
+      restart: always
+      ports:
+        - '3306'
+      environment:
+        MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'true'
+        MARIADB_DATABASE: drupal9
+        MYSQL_DATABASE: drupal9
+        MARIADB_USER: drupal9
+        MARIADB_PASSWORD: drupal9
+  appserver:
+    overrides:
+      volumes:
+        # Don't share our host working directory as /app. We want /app empty for composer.
+        - /app
+        # Instead share our host working directory as a standalone package.
+        - .:/usr/local/azqs-module-project
+    build:
+      # Create a new quickstart project and use the azqs_module_project module as a non-packagist repository.
+      - git clone --branch 2.2.x https://github.com/az-digital/az-quickstart-scaffolding.git /app
+      - composer config repositories.localdev path /usr/local/azqs-module-project && composer require --no-update uaz-web/azqs_module_project:\*@dev
+      - composer install
+tooling:
+  # Provide a command to install Drupal.
+  install:
+    service: appserver
+    cmd: /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin --db-url=mysql://drupal9:drupal9@database:3306/drupal9 -y --verbose && /app/vendor/bin/drush en -y azqs_module_project
+  # Provide Drush tooling to automatically know the Drupal root.
+  drush:
+    service: appserver
+    cmd: /app/vendor/bin/drush --root=/app/web
+  # Provide Drupal console tooling to automatically know the Drupal root.
+  drupal:
+    service: appserver
+    cmd: /app/vendor/bin/drupal --root=/app/web
+  # Provide phpcs tooling to check coding standards.
+  phpcs:
+    service: appserver
+    cmd: /app/vendor/bin/phpcs --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/modules/custom/azqs_module_project
+  # Provide PHPCBF tooling to fix coding standards.
+  phpcbf:
+    service: appserver
+    cmd: /app/vendor/bin/phpcbf --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/modules/custom/azqs_module_project
+  phpstan:
+    service: appserver
+    cmd: /app/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/modules/custom/azqs_module_project

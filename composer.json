@@ -1,0 +1,8 @@
+{
+  "name": "az-digital/azqs_module_project",
+  "description": "Composer project template for custom Quickstart module.",
+  "type": "drupal-custom-module",
+  "require": {
+      "drupal/core": "^9"
+  }
+}

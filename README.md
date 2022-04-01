@@ -24,7 +24,7 @@ lando install
 ```
 
 The sample lando configuration also includes tooling that expose Quickstart's
-code quality tools for checking that your module code adhere's to Quickstart's
+code quality tools for checking that your module code adheres to Quickstart's
 coding standards.
 ```
 lando phpcs

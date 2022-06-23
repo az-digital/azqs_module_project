@@ -32,7 +32,7 @@ services:
         - .:/usr/local/azqs-module-project
     build:
       # Create a new quickstart project and use the azqs_module_project module as a non-packagist repository.
-      - git clone --branch 2.2.x https://github.com/az-digital/az-quickstart-scaffolding.git /app
+      - git clone --branch 2.3.x https://github.com/az-digital/az-quickstart-scaffolding.git /app
       - composer config repositories.localdev path /usr/local/azqs-module-project && composer require --no-update uaz-web/azqs_module_project:\*@dev
       - composer install
 tooling:

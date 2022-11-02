@@ -33,7 +33,7 @@ services:
     build:
       # Create a new quickstart project and use the azqs_module_project module as a non-packagist repository.
       - git clone https://github.com/az-digital/az-quickstart-scaffolding.git /app
-      - composer config repositories.localdev path /usr/local/azqs-module-project && composer require --no-update az-digital/azqs_module_project:\*@dev
+      - composer config repositories.localdev path /usr/local/azqs-module-project && composer require --no-update uaz-web/azqs_module_project:\*@dev
       - composer install
 tooling:
   # Provide a command to install Drupal.

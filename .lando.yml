@@ -1,7 +1,7 @@
 name: azqs-module-project
-recipe: drupal9
+recipe: drupal10
 config:
-  php: '7.4'
+  php: '8.1'
   via: apache:2.4
   webroot: web
   database: mariadb:10.4
@@ -19,10 +19,10 @@ services:
         - '3306'
       environment:
         MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'true'
-        MARIADB_DATABASE: drupal9
-        MYSQL_DATABASE: drupal9
-        MARIADB_USER: drupal9
-        MARIADB_PASSWORD: drupal9
+        MARIADB_DATABASE: drupal10
+        MYSQL_DATABASE: drupal10
+        MARIADB_USER: drupal10
+        MARIADB_PASSWORD: drupal10
   appserver:
     overrides:
       volumes:
@@ -43,7 +43,7 @@ tooling:
       - /app/vendor/bin/drush --root=/app/web site:install
         --account-mail=noreply@email.arizona.edu --account-name=azadmin
         --account-pass=azadmin
-        --db-url=mysql://drupal9:drupal9@database:3306/drupal9 -y --verbose
+        --db-url=mysql://drupal10:drupal10@database:3306/drupal10 -y --verbose
       - /app/vendor/bin/drush --root=/app/web pm:install -y azqs_module_project
       - /app/vendor/bin/drush --root=/app/web config:set -y az_cas.settings disable_login_form 0
       - /app/vendor/bin/drush --root=/app/web cache:rebuild
@@ -52,10 +52,6 @@ tooling:
   drush:
     service: appserver
     cmd: /app/vendor/bin/drush --root=/app/web
-  # Provide Drupal console tooling to automatically know the Drupal root.
-  drupal:
-    service: appserver
-    cmd: /app/vendor/bin/drupal --root=/app/web
   # Provide phpcs tooling to check coding standards.
   phpcs:
     service: appserver

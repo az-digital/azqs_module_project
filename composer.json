@@ -3,6 +3,6 @@
   "description": "Composer project template for custom Quickstart module.",
   "type": "drupal-custom-module",
   "require": {
-      "drupal/core": "^9"
+      "drupal/core": "^10"
   }
 }

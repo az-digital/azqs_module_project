@@ -1,4 +1,4 @@
-# Quickstart module composer project template
+# Quickstart website custom module composer project template
 
 This repo provides a composer project template for creating a custom Drupal
 module designed to be used on Arizona Quickstart websites but that is not

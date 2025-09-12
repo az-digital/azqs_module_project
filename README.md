@@ -44,6 +44,3 @@ git branch -M main
 git remote add origin git@github.com:YOUR_ORG/awesome_feature_module.git
 git push -u origin main
 ```
-
-
-

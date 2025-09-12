@@ -1,118 +1,49 @@
-# Arizona Quickstart Custom Module Template – Step‑by‑Step Guide
+# Arizona Quickstart Module Template – Minimal Guide
 
-Use these steps to turn this template into a working custom module repository for an Arizona Quickstart site.
+The fastest way to create a new module for use in an Arizona Quickstart site.
 
----
-## 1. Create a project from this template
+## 1. Create project
 ```
-composer create-project --no-install --ask az-digital/azqs_module_project:dev-main your_module_dir
-cd your_module_dir
+composer create-project --no-install --ask az-digital/azqs_module_project:dev-main awesome_feature_module
+cd awesome_feature_module
 ```
 
-## 2. Pick your module names
-Decide on:
-- Machine name (snake case): e.g. `awesome_feature_module`
-- Dashed name: `awesome-feature-module`
-- Human name: `Awesome Feature Module`
-
-## 3. Global search & replace
-Replace everywhere (case sensitive):
+## 2. Rename
+Replace these two strings in all files:
 - `azqs_module_project` → `awesome_feature_module`
 - `azqs-module-project` → `awesome-feature-module`
 
-Files to check:
-- `composer.json` (package name)
-- `.lando.yml` (project name, volume path, composer require line, Drush install line, tooling paths)
-- Any README references
+Files to update:
+- `azqs_module_project.info.yml` (rename file)
+- `composer.json` (change `az-digital/azqs_module_project` to `YOUR_ORG/awesome_feature_module`)
+- `.lando.yml` (change `az-digital/azqs_module_project` to `YOUR_ORG/awesome_feature_module` and update other references)
 
-Then update `composer.json` "name":
-```
-"name": "your-namespace/awesome_feature_module"
-```
-
-## 4. (Optional) Fork or template
-If you forked, rename the repo to your module machine name. If you used “Use this template”, push the new repo to your org/user namespace. Transfer later to `az-digital` if it becomes shared.
-
-## 5. Require dependencies
-Install the scaffold (if not already from Lando build) and module dependencies:
-```
-composer install
-```
-
-## 6. Add to a consuming site (if private / not on Packagist)
-In the consuming site’s `composer.json` add:
-```jsonc
-{
-	"repositories": [
-		{ "type": "vcs", "url": "git@github.com:your-org/awesome_feature_module.git" }
-	]
-}
-```
-Then require it:
-```
-composer require your-org/awesome_feature_module:dev-main
-```
-Local path alternative during development:
-```jsonc
-{
-	"repositories": [
-		{"type": "path", "url": "../awesome_feature_module", "options": {"symlink": true}}
-	]
-}
-```
-
-## 7. Start Lando environment
+## 3. Start & install
 ```
 lando start
 lando install
-```
-
-## 8. Verify Drush
-```
 lando drush status
 ```
-If missing:
-```
-composer require drush/drush --dev
-```
 
-## 9. Enable your module in the site (if not auto‑installed)
-```
-lando drush en awesome_feature_module -y
-```
+## 4. Rewrite README
+Replace this README with real module documentation (overview, features, install, config, maintainer info).
 
-## 10. Code quality & static analysis
+## 5. Run code quality checks & fixes
 ```
 lando phpcs
-lando phpcbf   # to auto-fix
-lando phpstan  # static analysis
+lando phpcbf
+lando phpstan
 ```
 
-## 11. Rewrite this README for your module
-Replace template language with real module documentation. Suggested sections:
-- Overview (what problem it solves)
-- Features (bulleted)
-- Installation (any steps beyond enabling)
-- Configuration (forms, permissions, settings)
-- Development (coding standards, tests, local setup notes)
-- Maintainers / Support
-
-Remove leftover template-specific guidance.
-
-## 12. Commit your initialized module
+## 6. Push to new GitHub repo
 ```
+git init
 git add .
-git commit -m "Initialize Awesome Feature Module from template"
-git push origin main
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin git@github.com:YOUR_ORG/awesome_feature_module.git
+git push -u origin main
 ```
 
-## 13. Checklist before sharing
-- No remaining `azqs_module_project` or `azqs-module-project`
-- Composer package name updated
-- Lando commands run successfully
-- Module installs & enables with Drush
-- Coding standards pass or are fixable (`phpcbf`)
-- Static analysis passes with acceptable level
 
-## 14. Next steps
-- Add a proper description of the module’s functionality.
+

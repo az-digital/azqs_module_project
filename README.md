@@ -14,7 +14,7 @@ Replace these two strings in all files:
 - `azqs-module-project` → `awesome-feature-module`
 
 Files to update:
-- `azqs_module_project.info.yml` (rename file)
+- `azqs_module_project.info.yml` (rename file)  to `awesome_feature_module.info.yml`)
 - `composer.json` (change `az-digital/azqs_module_project` to `YOUR_ORG/awesome_feature_module`)
 - `.lando.yml` (change `az-digital/azqs_module_project` to `YOUR_ORG/awesome_feature_module` and update other references)
 

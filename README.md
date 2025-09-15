@@ -1,4 +1,4 @@
-# Arizona Quickstart Module Template – Minimal Guide
+# Arizona Quickstart Module Template
 
 The fastest way to create a new module for use in an Arizona Quickstart site.
 

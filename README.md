@@ -4,7 +4,7 @@ The fastest way to create a new module for use in an Arizona Quickstart site.
 
 ## 1. Create project
 ```
-composer create-project --no-install --ask az-digital/azqs_module_project:dev-main awesome_feature_module
+composer create-project --no-install az-digital/azqs_module_project:dev-main awesome_feature_module
 cd awesome_feature_module
 ```
 

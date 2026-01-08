@@ -1,28 +1,27 @@
 name: azqs-module-project
-recipe: drupal10
+recipe: drupal11
 config:
   php: '8.3'
   via: apache:2.4
   webroot: web
-  database: mariadb:10.6
+  database: mariadb:11.4
   xdebug: false
 services:
-  # Replaces default lando MariaDB image with arm64 (Apple M1) compatible one.
-  # TODO: remove database service overrides once lando is updated.
+  # Base Lando bitnami legacy images no longer receive support.
   database:
     type: compose
     services:
-      image: mariadb:10.6
+      image: mariadb:11.4
       command: docker-entrypoint.sh mariadbd
       restart: always
       ports:
         - '3306'
       environment:
         MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'true'
-        MARIADB_DATABASE: drupal10
-        MYSQL_DATABASE: drupal10
-        MARIADB_USER: drupal10
-        MARIADB_PASSWORD: drupal10
+        MARIADB_DATABASE: drupal11
+        MYSQL_DATABASE: drupal11
+        MARIADB_USER: drupal11
+        MARIADB_PASSWORD: drupal11
   appserver:
     overrides:
       volumes:
@@ -42,8 +41,8 @@ tooling:
     cmd:
       - /app/vendor/bin/drush --root=/app/web site:install
         --account-mail=noreply@email.arizona.edu --account-name=azadmin
-        --account-pass=azadmin2025
-        --db-url=mysql://drupal10:drupal10@database:3306/drupal10 -y --verbose
+        --account-pass=azadmin2026
+        --db-url=mysql://drupal11:drupal11@database:3306/drupal11 -y --verbose
       - /app/vendor/bin/drush --root=/app/web pm:install -y azqs_module_project
       - /app/vendor/bin/drush --root=/app/web config:set -y az_cas.settings disable_login_form 0
       - /app/vendor/bin/drush --root=/app/web cache:rebuild
